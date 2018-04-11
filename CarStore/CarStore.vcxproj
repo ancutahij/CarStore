@@ -143,6 +143,17 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Domain.cpp" />
+    <ClCompile Include="Repository.cpp" />
+    <ClCompile Include="Service.cpp" />
+    <ClCompile Include="Service.h" />
+    <ClCompile Include="UserInterface.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Domain.h" />
+    <ClInclude Include="Repository.h" />
+    <ClInclude Include="Tests.h" />
+    <ClInclude Include="UserInterface.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
