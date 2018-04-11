@@ -97,11 +97,12 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
-      <WarningLevel>Level3</WarningLevel>
+      <WarningLevel>Level4</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <TreatWarningAsError>true</TreatWarningAsError>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -144,7 +145,10 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Domain.cpp" />
+    <ClCompile Include="DomainTests.cpp" />
+    <ClCompile Include="main.cpp" />
     <ClCompile Include="Repository.cpp" />
+    <ClCompile Include="RepositoryTests.cpp" />
     <ClCompile Include="Service.cpp" />
     <ClCompile Include="Service.h" />
     <ClCompile Include="UserInterface.cpp" />
