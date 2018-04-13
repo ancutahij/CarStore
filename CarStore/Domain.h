@@ -14,14 +14,14 @@ public:
 		: m_registrationNumber(registrationNumber), m_manufacturer(manufacturer), m_model(model), m_type(type){}
 
 	// using dalegating constructor to minimize redundant code
-	Car() : Car(" ", " ", " ", " ") {}
+	Car() : Car(" ", " ", " ", " ")  {} 
 
 	~Car() {} 
 
 	Car(const Car& original)
 		: m_registrationNumber(original.m_registrationNumber), m_manufacturer(original.m_manufacturer), m_model(original.m_model), m_type(original.m_type)
 	{
-		std::cout << "Copy Constructor";
+	//	std::cout << "Copy Constructor";
 	}
 	// Overloading needed operators
 	friend std::ostream& operator<<(std::ostream& out, const Car& car) ;

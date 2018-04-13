@@ -1,5 +1,5 @@
 #include<cassert>
-#include"Repository.h"
+#include"Service.h"
 #pragma once
 class Test
 {
@@ -9,4 +9,11 @@ public:
 	static void addTests();
 	static void deleteTests();
 	static void updateTests();
+	static void copyConstructer();
+	static void addTestService();
+	static void deleteTestService();
+	static void updateTestService();
+	static void searchElement();
+	static void filterTests();
+	static void sortTests();
 };

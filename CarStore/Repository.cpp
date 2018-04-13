@@ -15,31 +15,33 @@ void Repository::addNewElement(const Car& element)
 */
 void Repository::deleteElement(const std::string& registrationNr)
 {
-	int position = getPosition( registrationNr);
+	const int position = getPosition( registrationNr);
 	m_allElements.erase(m_allElements.begin()+position);
 }
+
+
 /*
-	Return the element from the given position.
+	An attribute of an element is changed.
+*/
+void Repository::updateElement(  const std::string& registrationNr,const std::string& attribute, setterFunction setAttribute)
+{
+	const int poz = getPosition(registrationNr);
+	Car &car = getElement(poz);
+	std::invoke(setAttribute,car, attribute);
+	//	It also works this syntax: (car.*setAttribute)(attribute);
+}
+
+/*
+Return the element from the given position.
 */
 Car& Repository::getElement(const int& position)
 {
 	return m_allElements.at(position);
 }
 
-
-/*
-	An attribute of an element if changed.
-*/
-void Repository::updateElement( const std::string& attribute, setterFunction setAttribute)
-{
-	//setAttribute(attribute);
-	Car car = getElement(2);
-	//std::invoke(car, setAttribute, attribute);
-	//car.*setAttribute(attribute);
-}
-
 /*
 	Return position for an element from the vector
+	Otherwise, return -1
 */
 int Repository::getPosition(const std::string & registrationNr) 
 {
@@ -50,18 +52,24 @@ int Repository::getPosition(const std::string & registrationNr)
 
 	if (it == m_allElements.end())
 	{
-		// car not in vector
+		return -1;
 	}
 	
-	auto index = std::distance(m_allElements.begin(), it);
+	const auto index = std::distance(m_allElements.begin(), it);
 	return index;
 	
 	
 }
-int Repository::getSize()
+int Repository::getSize() noexcept
 {
 	return m_allElements.size();
 
 }
+
+std::vector<Car> Repository::getAll() const
+{
+	return m_allElements;
+}
+
 
 

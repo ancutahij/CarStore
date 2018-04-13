@@ -50,12 +50,21 @@ void Test::updateTests()
 	Car car = repo.getElement(1);
 	std::string manufacturer = "Mercedes";
 
-	repo.updateElement("Mercedes",&Car::setManufacturer);
-	setterFunction fn = &Car::setManufacturer;
-	//std::invoke(car, fn, "34");
-	car.*fn("#$");
-	for (int i = 0; i < repo.getSize(); i++)
-		std::cout <<"\n"<< repo.getElement(i);
-		
+	repo.updateElement("245","Mercedes",&Car::setManufacturer);
+
 }
 
+
+void Test::copyConstructer()
+{
+	Repository repo;
+	Car car1{ "223","Toyota","x345", "family" };
+	Car car2{ "245", "Audi", "24", "trip" };
+	Car car3{ "fe2","Opel", "3446", "family" };
+	repo.addNewElement(car1);
+	repo.addNewElement(car2);
+	repo.addNewElement(car3);
+
+	Repository newRepo{ repo };
+	assert(newRepo.getSize() == 3);
+}
