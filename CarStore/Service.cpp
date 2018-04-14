@@ -5,6 +5,7 @@ Add a new element to the list
 */
 void Service::addNewElementService(const Car& element)
 {
+	m_val.isValidElement(element);
 	m_repo.addNewElement(element);
 }
 
@@ -13,6 +14,7 @@ Delete an element by its registration number
 */
 void Service::deleteElementService(const std::string& registrationNr)
 {
+	m_val.isValidRegistrationNR(registrationNr);
 	m_repo.deleteElement(registrationNr);
 }
 
@@ -21,6 +23,8 @@ Update manufacturer field for an element
 */
 void Service::updateManufacturerService(const std::string& registrationNr, const std::string& attribute)
 {
+	m_val.isValidRegistrationNR(registrationNr);
+	m_val.isValidManufacturer(attribute);
 	m_repo.updateElement(registrationNr, attribute, &Car::setManufacturer);
 }
 
@@ -30,6 +34,9 @@ Update type field for an element
 */
 void Service::updateTypeService(const std::string& registrationNr, const std::string& attribute)
 {
+
+	m_val.isValidRegistrationNR(registrationNr);
+	m_val.isValidType(attribute);
 	m_repo.updateElement(registrationNr, attribute, &Car::setType);
 
 }
@@ -39,6 +46,9 @@ Update model field for an element
 */
 void Service::updateModelService(const std::string& registrationNr, const std::string& attribute)
 {
+
+	m_val.isValidRegistrationNR(registrationNr);
+	m_val.isValidModel(attribute);
 	m_repo.updateElement(registrationNr, attribute, &Car::setModel);
 }
 
@@ -89,6 +99,7 @@ Return a vector that contains all cars that their manufacturer contains the subs
 */
 std::vector<Car> Service::filterByManufacturer(const std::string& attribute) const
 {
+	m_val.isValidManufacturer(attribute);
 	return filterElements([attribute](const Car& car)
 	{return car.getManufacturer() == attribute; });
 
@@ -100,6 +111,7 @@ Return a vector that contains all cars that their type contains the substring: a
 */
 std::vector<Car> Service::filterByType(const std::string& attribute) const
 {
+	m_val.isValidType(attribute);
 	return filterElements([attribute](const Car& car)
 	{return car.getType() == attribute; });
 
@@ -146,6 +158,3 @@ std::vector <Car> Service::sortManufacturerModel() const
 		}
 	});
 }
-
-
-

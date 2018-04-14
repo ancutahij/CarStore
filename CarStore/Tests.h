@@ -16,4 +16,5 @@ public:
 	static void searchElement();
 	static void filterTests();
 	static void sortTests();
+	static void validatorTests();
 };

@@ -10,10 +10,23 @@ void Test::addTests()
 	repo.addNewElement(car1);
 	assert(repo.getSize() == 1);
 
-	repo.addNewElement(car1);
+	repo.addNewElement(car2);
 	assert(repo.getSize() == 2);
 
+	bool exceptionThrown = false;
+	try
+	{
+		repo.addNewElement(car1);
+
+	}
+	catch (const std::exception&)
+	{
+		exceptionThrown = true;
+	}
+	assert(exceptionThrown);
+	
 }
+
 
 void Test::deleteTests()
 {

@@ -17,48 +17,64 @@ void Console::ui()
 
 		if (std::stoi(option) == OptionMenu::EXIT)// convert string to int type
 			break;
-		switch (std::stoi(option))
+		try
 		{
-		case OptionMenu::ADD:
-			addElement();
-			break;
-		case OptionMenu::PRINT:
-			printElements();
-			break;
-		case OptionMenu::DELETE:
-			if (m_srv.getSizeRepo())
-				deleteElement();
-			else
-				std::cout << "\n\t There are no cars.\n";
-			break;
-		case OptionMenu::UPDATE:
-			if (m_srv.getSizeRepo())
-				updateElement();
-			else
-				std::cout << "\n\t There are no cars.\n";
-			break;
-		case OptionMenu::SEARCH:
-			if (m_srv.getSizeRepo())
-				searchElement();
-			else
-				std::cout << "\n\t There are no cars.\n";
+			switch (std::stoi(option))
+			{
+			case OptionMenu::ADD:
+				addElement();
+				std::cout << "\n\t Car was successfully added!";
+				break;
+			case OptionMenu::PRINT:
+				printElements();
+				break;
+			case OptionMenu::DELETE:
+				if (m_srv.getSizeRepo())
+					deleteElement();
+				else
+					std::cout << "\n\t There are no cars.\n";
+				break;
+			case OptionMenu::UPDATE:
+				if (m_srv.getSizeRepo())
+					updateElement();
+				else
+					std::cout << "\n\t There are no cars.\n";
+				break;
+			case OptionMenu::SEARCH:
+				if (m_srv.getSizeRepo())
+					searchElement();
+				else
+					std::cout << "\n\t There are no cars.\n";
 
-			break;
-		case OptionMenu::FILTER:
-			if (m_srv.getSizeRepo())
-				filterElements();
-			else
-				std::cout << "\n\t There are no cars.\n";
-			break;
-		case OptionMenu::SORT:
-			if (m_srv.getSizeRepo())
-				sortElements();
-			else
-				std::cout << "\n\t There are no cars.\n";
-			break;
+				break;
+			case OptionMenu::FILTER:
+				if (m_srv.getSizeRepo())
+					filterElements();
+				else
+					std::cout << "\n\t There are no cars.\n";
+				break;
+			case OptionMenu::SORT:
+				if (m_srv.getSizeRepo())
+					sortElements();
+				else
+					std::cout << "\n\t There are no cars.\n";
+				break;
 
-		default:
-			std::cout << "\n\t INVALID OPTION \n";
+			default:
+				std::cout << "\n\t INVALID OPTION \n";
+			}
+		}
+		catch (RepositoryException &exception)
+		{
+			std::cerr << exception.what() << "\n";
+		}
+		catch (ElementException &exception)
+		{
+			std::cerr << exception.what() << "\n";
+		}
+		catch (...)
+		{
+			std::cerr << "\n\t Another exceptions has been thrown! \n";
 		}
 	}
 }
@@ -187,11 +203,15 @@ void Console::filterElements()
 		{
 		case OptionFilter::MANUFACTURER:
 			rez= m_srv.filterByManufacturer(attribute);
+			if (rez.size() == 0)
+				throw RepositoryException("\n\t No cars with the given manufacturer!");
 			for (int i = 0; i < rez.size(); i++)
 				std::cout << rez.at(i)<<"\n";
 			break;
 		case OptionFilter::TYPE:
 			rez=m_srv.filterByType(attribute);
+			if (rez.size() == 0)
+				throw RepositoryException("\n\t No cars with the given type!");
 			for (int i = 0; i < rez.size(); i++)
 				std::cout << rez.at(i)<<"\n";
 			break;
@@ -215,8 +235,7 @@ void Console::sortElements()
 		if (std::stoi(option) == OptionMenu::EXIT)// convert string to int type
 			break;
 
-		std::cout << "\n Attribute: ";
-		std::string attribute = getUserInput();
+	
 		std::vector<Car> rez;
 
 		switch (std::stoi(option))

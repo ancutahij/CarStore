@@ -1,4 +1,5 @@
 #include"Repository.h"
+#include"Validator.h"
 #include<functional>
 #include<vector>
 #include<algorithm>
@@ -8,17 +9,14 @@ typedef int(*SortFunction)(const Car&, const Car&);
 class Service
 {
 	Repository m_repo;
+	Validator m_val;
 public:
-	Service(const Repository& repo)
+	Service(const Repository& repo, const Validator& val)
 	{
 		m_repo = repo;
+		m_val = val;
 	}
 
-	/*Service()
-	{
-		m_repo = Repository
-	}
-	*/
 	~Service() {}
 
 	//Service(const Service& srv) = delete;

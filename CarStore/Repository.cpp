@@ -8,17 +8,29 @@
 */
 void Repository::addNewElement(const Car& element)
 {
-	m_allElements.push_back(element); 
+	//if (getPosition(element.getRegistration()) > -1)
+	//
+//	throw RepositoryException("\n\t The car already exists!");
+	try
+	{
+		getPosition(element.getRegistration());
+
+	}
+	catch (const std::exception&)
+	{
+		m_allElements.push_back(element);
+		return;}
+	throw RepositoryException("\n\t The car already exists!");
+
 }
 /*
 	Delete an element by its registration number using the erase built-in function.
 */
 void Repository::deleteElement(const std::string& registrationNr)
 {
-	const int position = getPosition( registrationNr);
-	m_allElements.erase(m_allElements.begin()+position);
+	const int position = getPosition(registrationNr);
+	m_allElements.erase(m_allElements.begin() + position);
 }
-
 
 /*
 	An attribute of an element is changed.
@@ -41,7 +53,7 @@ Car& Repository::getElement(const int& position)
 
 /*
 	Return position for an element from the vector
-	Otherwise, return -1
+	Otherwise, raise an exception
 */
 int Repository::getPosition(const std::string & registrationNr) 
 {
@@ -52,7 +64,7 @@ int Repository::getPosition(const std::string & registrationNr)
 
 	if (it == m_allElements.end())
 	{
-		return -1;
+		throw RepositoryException("\n\t The car couldn't be found!");
 	}
 	
 	const auto index = std::distance(m_allElements.begin(), it);
@@ -70,6 +82,5 @@ std::vector<Car> Repository::getAll() const
 {
 	return m_allElements;
 }
-
 
 

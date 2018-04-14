@@ -1,5 +1,8 @@
 #include"Tests.h"
 #include"UserInterface.h"
+#define _CRTDBG_MAP_ALLOC  
+#include <stdlib.h>  
+#include <crtdbg.h>  
 /*
 	Clear the screen
 */
@@ -22,16 +25,22 @@ void tests()
 	Test::searchElement();
 	Test::filterTests();
 	Test::sortTests();
-
+	Test::validatorTests();
+	
 	cls();
 }
 int main()
 {
 	tests();
+	
 	Repository repo;
-	Service srv{ repo };
+	Validator val;
+	Service srv{ repo, val };
 	Console cons{ srv };
 	cons.ui();
-	//cons.addElement();
 	
+	_CrtDumpMemoryLeaks();
+	return 0;
+
 }
+

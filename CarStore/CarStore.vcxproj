@@ -157,12 +157,14 @@
     <ClCompile Include="Service.h" />
     <ClCompile Include="ServiceTests.cpp" />
     <ClCompile Include="UserInterface.cpp" />
+    <ClCompile Include="Validator.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Domain.h" />
     <ClInclude Include="Repository.h" />
     <ClInclude Include="Tests.h" />
     <ClInclude Include="UserInterface.h" />
+    <ClInclude Include="Validator.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

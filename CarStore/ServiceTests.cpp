@@ -3,22 +3,34 @@
 void Test::addTestService()
 {
 	Repository repo;
-	Service srv{ repo };
+	Validator val;
+	Service srv{ repo, val };
 	Car car1{ "223","Toyota","x345", "family" };
 	Car car2{ "245", "Audi", "24", "trip" };
-
+	Car car3{ "245", "Audi", " ", "trip" };
 	assert( srv.getSizeRepo() == 0);
 
 	srv.addNewElementService(car1);
 	assert(srv.getSizeRepo() == 1);
 	
-	srv.addNewElementService(car1);
+	srv.addNewElementService(car2);
 	assert(srv.getSizeRepo() == 2);
+
+	bool ExceptionThrown = false;
+	try {
+		srv.addNewElementService(car3);
+	}
+	catch(std::exception& )
+	{
+		ExceptionThrown = true;
+	}
+	assert(ExceptionThrown);
 }
 void Test::deleteTestService()
 {
 	Repository repo;
-	Service srv{ repo };
+	Validator val;
+	Service srv{ repo, val };
 	Car car1{ "223","Toyota","x345", "family" };
 	Car car2{ "245", "Audi", "24", "trip" };
 	Car car3{ "fe2","Opel", "3446", "family" };
@@ -35,11 +47,22 @@ void Test::deleteTestService()
 	assert(car.getModel() == "3446");
 	assert(car.getManufacturer() == "Opel");
 	assert(car1.getType() == "family");
+
+	bool ExceptionThrown = false;
+	try {
+		srv.deleteElementService(" ");
+	}
+	catch (std::exception&)
+	{
+		ExceptionThrown = true;
+	}
+	assert(ExceptionThrown);
 }
 void Test::updateTestService()
 {
 	Repository repo;
-	Service srv{repo};
+	Validator val;
+	Service srv{ repo, val };
 	Car car1{ "223","Toyota","x345", "family" };
 	Car car2{ "245", "Audi", "24", "trip" };
 	Car car3{ "fe2","Opel", "3446", "family" };
@@ -63,7 +86,8 @@ void Test::updateTestService()
 void Test::searchElement()
 {
 	Repository repo;
-	Service srv{ repo };
+	Validator val;
+	Service srv{ repo, val };
 	Car car1{ "223","Toyota","x345", "family" };
 	Car car2{ "245", "Audi", "24", "trip" };
 	Car car3{ "fe2","Opel", "3446", "family" };
@@ -75,15 +99,25 @@ void Test::searchElement()
 	int pos = srv.searchElement("223");
 	assert(pos == 0);
 
-	pos = srv.searchElement("2334dd");
-	assert(pos == -1);
+	bool exceptionThrown = 0;
+	try
+	{
+		srv.searchElement("34536ff");
+
+	}
+	catch (const std::exception&)
+	{
+		exceptionThrown = 1;
+	}
+	assert(exceptionThrown);
 
 }
 
 void Test::filterTests()
 {
 	Repository repo;
-	Service srv{ repo };
+	Validator val;
+	Service srv{ repo, val };
 	Car car1{ "223","Toyota","x345", "family" };
 	Car car2{ "245", "Audi", "24", "trip" };
 	Car car3{ "fe2","Audi", "3446", "family" };
@@ -101,7 +135,8 @@ void Test::filterTests()
 void Test::sortTests()
 {
 	Repository repo;
-	Service srv{ repo };
+	Validator val;
+	Service srv{ repo, val };
 	Car car1{ "223","Toyota","x345", "family" };
 	Car car2{ "245", "Audi", "24", "trip" };
 	Car car3{ "fe2","Audi", "3446", "family" };
@@ -132,6 +167,7 @@ void Test::sortTests()
 	assert(car.getManufacturer() == "Audi");
 	assert(car.getType() == "family");
 }
+
 
 
 

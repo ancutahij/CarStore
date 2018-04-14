@@ -22,3 +22,36 @@ void Test::settersTests()
 	assert(car1.getType() == "trip");
 }
 
+void Test::validatorTests()
+{
+	Car car1{ "223","Toyota","x345", "fam2ily" };
+	Car car2{ "223","Toyo2ta","x345", "fam2ily" };
+
+	Validator validator;
+	bool exceptionThrown = 0;
+	try
+	{
+		validator.isValidElement(car1) ;
+		
+	}
+	catch (const std::exception&)
+	{
+		exceptionThrown = 1;
+	}
+	assert(exceptionThrown);
+	exceptionThrown = 0;
+	try
+	{
+		validator.isValidElement(car2);
+
+	}
+	catch (const std::exception&)
+	{
+		exceptionThrown = 1;
+	}
+	assert(exceptionThrown);
+}
+
+
+
+
