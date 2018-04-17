@@ -1,7 +1,7 @@
 #include"Tests.h"
-void Test::addTests() 
+void Test::addTests()
 {
-	Repository repo;
+	Repository<List> repo;
 	Car car1{ "223","Toyota","x345", "family" };
 	Car car2{ "245", "Audi", "24", "trip" };
 
@@ -19,18 +19,20 @@ void Test::addTests()
 		repo.addNewElement(car1);
 
 	}
-	catch (const std::exception&)
+	catch (RepositoryException& e)
 	{
 		exceptionThrown = true;
+		std::cerr << e.what();
 	}
 	assert(exceptionThrown);
-	
+
 }
+
 
 
 void Test::deleteTests()
 {
-	Repository repo;
+	Repository<List> repo;
 	Car car1{ "223","Toyota","x345", "family" };
 	Car car2{ "245", "Audi", "24", "trip" };
 	Car car3{ "fe2","Opel", "3446", "family" };
@@ -47,12 +49,16 @@ void Test::deleteTests()
 	assert(car.getModel() == "3446");
 	assert(car.getManufacturer() == "Opel");
 	assert(car1.getType() == "family");
+
+	repo.deleteElement("223");
+	assert(repo.getSize() == 1);
+
 }
 
 
 void Test::updateTests()
 {
-	Repository repo;
+	Repository<List> repo;
 	Car car1{ "223","Toyota","x345", "family" };
 	Car car2{ "245", "Audi", "24", "trip" };
 	Car car3{ "fe2","Opel", "3446", "family" };
@@ -63,14 +69,13 @@ void Test::updateTests()
 	Car car = repo.getElement(1);
 	std::string manufacturer = "Mercedes";
 
-	repo.updateElement("245","Mercedes",&Car::setManufacturer);
-
+	repo.updateElement("245", "Mercedes", &Car::setManufacturer);
 }
 
-
+/*
 void Test::copyConstructer()
 {
-	Repository repo;
+	Repository<List> repo;
 	Car car1{ "223","Toyota","x345", "family" };
 	Car car2{ "245", "Audi", "24", "trip" };
 	Car car3{ "fe2","Opel", "3446", "family" };
@@ -78,6 +83,8 @@ void Test::copyConstructer()
 	repo.addNewElement(car2);
 	repo.addNewElement(car3);
 
-	Repository newRepo{ repo };
+	Repository<List> newRepo{ repo };
 	assert(newRepo.getSize() == 3);
 }
+
+*/

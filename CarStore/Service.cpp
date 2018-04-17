@@ -1,7 +1,8 @@
 #include"Service.h"
 
 /*
-Add a new element to the list
+	Add a new element to the list
+	Exception are thrown in repository class
 */
 void Service::addNewElementService(const Car& element)
 {
@@ -10,7 +11,9 @@ void Service::addNewElementService(const Car& element)
 }
 
 /*
-Delete an element by its registration number
+	Delete an element by its registration number
+	Exception are thrown in repository class
+
 */
 void Service::deleteElementService(const std::string& registrationNr)
 {
@@ -19,7 +22,9 @@ void Service::deleteElementService(const std::string& registrationNr)
 }
 
 /*
-Update manufacturer field for an element
+	Update manufacturer field for an element
+	Exception are thrown in repository class
+
 */
 void Service::updateManufacturerService(const std::string& registrationNr, const std::string& attribute)
 {
@@ -29,7 +34,8 @@ void Service::updateManufacturerService(const std::string& registrationNr, const
 }
 
 /*
-Update type field for an element
+	Update type field for an element
+	Exception are thrown in repository class
 
 */
 void Service::updateTypeService(const std::string& registrationNr, const std::string& attribute)
@@ -42,7 +48,8 @@ void Service::updateTypeService(const std::string& registrationNr, const std::st
 }
 
 /*
-Update model field for an element
+	Update model field for an element
+	Exception are thrown in repository classs
 */
 void Service::updateModelService(const std::string& registrationNr, const std::string& attribute)
 {
@@ -53,17 +60,17 @@ void Service::updateModelService(const std::string& registrationNr, const std::s
 }
 
 /*
-Get current size of elements list.
+	Get current size of elements list.
 */
-int Service::getSizeRepo()
+int Service::getSizeRepo() const
 {
 	return m_repo.getSize();
 }
 
 /*
-Get element from a position
+	Get element from a position
 */
-Car& Service::getElementService(const int& position)
+Car& Service::getElementService(const int& position) const
 {
 	return m_repo.getElement(position);
 }
@@ -86,11 +93,15 @@ If a car has the needed requirements, it is added in vector
 std::vector<Car> Service::filterElements(std::function<int(const Car&)> fct) const
 {
 	std::vector<Car> rez;
-	for (const auto& car : m_repo.getAll())
+	for (int i = 0; i < getSizeRepo(); i++)
+	{
+		Car car = m_repo.getElement(i);
 		if (fct(car))
 		{
 			rez.push_back(car);
 		}
+	}
+
 	return rez;
 }
 /*
@@ -116,14 +127,27 @@ std::vector<Car> Service::filterByType(const std::string& attribute) const
 	{return car.getType() == attribute; });
 
 }
-
+/*
+	General sort function.
+	This function can be applied for sorting after register number, type and manufacturer+ model
+*/
 std::vector<Car> Service::sortElements(SortFunction fct) const
 {
-	std::vector<Car> rez{ m_repo.getAll() };
+	std::vector<Car> rez;
+	for (int i = 0; i < getSizeRepo(); i++)
+	{
+		Car car = getElementService(i);
+		rez.push_back(car);
+	}
+
 	std::sort(rez.begin(), rez.end(), fct);
 	return rez;
 }
 
+/*
+	Use general sort function defined above.
+	Sort ascending after register number
+*/
 std::vector<Car> Service::sortRegistrationNumber() const
 {
 	return sortElements([](const Car& c1, const Car& c2)
@@ -133,6 +157,11 @@ std::vector<Car> Service::sortRegistrationNumber() const
 	});
 }
 
+/*
+	
+	Use general sort function defined above.
+	Sort ascending after type.
+*/
 std::vector<Car> Service::sortType() const
 {
 	return sortElements([](const Car& c1, const Car &c2)
@@ -141,6 +170,12 @@ std::vector<Car> Service::sortType() const
 		return rez == -1 ? 1 : 0;
 	});
 }
+
+/*
+	
+	Use general sort function defined above.
+	Sort ascending after manufacturer + model.
+*/
 std::vector <Car> Service::sortManufacturerModel() const
 {
 	return sortElements([](const Car& c1, const Car& c2)

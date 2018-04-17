@@ -7,7 +7,8 @@ class Console
 	Service m_srv;
 public:
 	Console(const Service& srv)
-		: m_srv(srv) {}
+		:m_srv(srv) {}
+	
 
 	/*
 		It's not allowed to copy objects from Console class.
@@ -58,4 +59,5 @@ public:
 	void searchElement();
 	void filterElements();
 	void sortElements();
+	
 };

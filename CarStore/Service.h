@@ -8,14 +8,15 @@
 typedef int(*SortFunction)(const Car&, const Car&);
 class Service
 {
-	Repository m_repo;
+	Repository<List> m_repo;
 	Validator m_val;
 public:
-	Service(const Repository& repo, const Validator& val)
+	Service(const Repository<List>& repo, const Validator& val)
 	{
 		m_repo = repo;
 		m_val = val;
 	}
+	Service() {}
 
 	~Service() {}
 
@@ -26,8 +27,8 @@ public:
 	void updateManufacturerService(const std::string& registrationNr, const std::string& attribute);
 	void updateTypeService(const std::string& registrationNr, const std::string& attribute);
 	void updateModelService(const std::string& registrationNr, const std::string& attribute);
-	int getSizeRepo() ;
-	Car& getElementService(const int& position);
+	int getSizeRepo() const ;
+	Car& getElementService(const int& position) const ;
 	int searchElement(const std::string& registrationNumber);
 	std::vector<Car> filterElements(std::function<int(const Car&)> fct) const; 
 	std::vector<Car> filterByManufacturer(const std::string& attribute) const;
@@ -36,5 +37,6 @@ public:
 	std::vector<Car> sortRegistrationNumber() const;
 	std::vector<Car> sortType() const;
 	std::vector <Car> sortManufacturerModel() const;
+	
 };
 

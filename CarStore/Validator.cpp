@@ -33,6 +33,7 @@ void Validator::isValidModel(const std::string& model) const
 
 }
 
+
 /*
 
 	Like manufacturer verification function, it is checked out if the type ( string type ) contains only letters.

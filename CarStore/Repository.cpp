@@ -5,12 +5,11 @@
 
 /*
 	Add an element to the end of the vector 
+	Firstly verify is the element doesn't already exist in vector. In this case an exception is raised.
 */
-void Repository::addNewElement(const Car& element)
+template <class T>
+void Repository<T>::addNewElement(const Car& element)
 {
-	//if (getPosition(element.getRegistration()) > -1)
-	//
-//	throw RepositoryException("\n\t The car already exists!");
 	try
 	{
 		getPosition(element.getRegistration());
@@ -24,63 +23,69 @@ void Repository::addNewElement(const Car& element)
 
 }
 /*
-	Delete an element by its registration number using the erase built-in function.
+	Return the current size of vector
 */
-void Repository::deleteElement(const std::string& registrationNr)
-{
-	const int position = getPosition(registrationNr);
-	m_allElements.erase(m_allElements.begin() + position);
-}
-
-/*
-	An attribute of an element is changed.
-*/
-void Repository::updateElement(  const std::string& registrationNr,const std::string& attribute, setterFunction setAttribute)
-{
-	const int poz = getPosition(registrationNr);
-	Car &car = getElement(poz);
-	std::invoke(setAttribute,car, attribute);
-	//	It also works this syntax: (car.*setAttribute)(attribute);
-}
-
-/*
-Return the element from the given position.
-*/
-Car& Repository::getElement(const int& position)
-{
-	return m_allElements.at(position);
-}
-
-/*
-	Return position for an element from the vector
-	Otherwise, raise an exception
-*/
-int Repository::getPosition(const std::string & registrationNr) 
-{
-	auto pred = [registrationNr](const Car & item) {
-		return item.getRegistration()== registrationNr;
-	};
-	auto it = std::find_if(m_allElements.begin(), m_allElements.end(), pred);
-
-	if (it == m_allElements.end())
-	{
-		throw RepositoryException("\n\t The car couldn't be found!");
-	}
-	
-	const auto index = std::distance(m_allElements.begin(), it);
-	return index;
-	
-	
-}
-int Repository::getSize() noexcept
+template <class T>
+int Repository<T>::getSize() const noexcept 
 {
 	return m_allElements.size();
 
 }
 
-std::vector<Car> Repository::getAll() const
+
+
+/*
+Return position for an element from vector
+Otherwise, raise an exception
+*/
+template <class T>
+int Repository<T>::getPosition(const std::string & registrationNr)
 {
-	return m_allElements;
+
+	int poz = -1;
+	for (int i = 0; i < getSize(); i++)
+		if (m_allElements[i].getRegistration() == registrationNr)
+		{
+			poz = i;
+			break;
+		}
+	return poz>-1 ? poz : throw RepositoryException("\n\t The car couldn't be found!");
+}
+/*
+Delete an element by its registration number using the erase function which is implemented in List class.
+Otherwise, raise an exception if an element with given register number can not be found
+*/
+template <class T>
+void Repository<T>::deleteElement(const std::string& registrationNr)
+{
+	const int position = getPosition(registrationNr);
+	m_allElements.erase( position);
 }
 
 
+/*
+Return the element from  given position.
+*/
+template <class T>
+Car& Repository<T>::getElement(const int& position) const 
+{
+	return m_allElements[position];
+}
+
+
+/*
+	An attribute of an element is changed.
+	The attrbute can be:
+	- manufacuter
+	- type
+	- model
+	Otherwise, raise an exception if an element with given register number can not be found.
+
+*/
+template <class T>
+void Repository<T>::updateElement(const std::string& registrationNr, const std::string& attribute, setterFunction setAttribute)
+{
+	const int poz = getPosition(registrationNr);
+	Car &car = getElement(poz);
+	std::invoke(setAttribute, car, attribute); //	It also works this syntax: (car.*setAttribute)(attribute);
+}

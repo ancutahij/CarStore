@@ -224,6 +224,7 @@ void Console::filterElements()
 /*
 	Sort elements by a key
 */
+
 void Console::sortElements()
 {
 	while (true)

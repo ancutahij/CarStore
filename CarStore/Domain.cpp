@@ -1,5 +1,9 @@
 #include"Domain.h"
 
+
+/*
+	Getters for car's fields.
+*/
 std::string Car::getRegistration() const
 {
 	return this->m_registrationNumber;
@@ -17,6 +21,9 @@ std::string Car::getType() const
 	return this->m_type;
 }
 
+/*
+	Setters for car's fields.
+*/
 void Car::setRegistration(const std::string& registrationNr)
 {
 	this->m_registrationNumber = registrationNr;

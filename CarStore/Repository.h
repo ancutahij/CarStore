@@ -1,6 +1,7 @@
-#include<vector>
+//#include<vector>
 #include<exception>
 #include"Domain.h"
+#include"LinkedList.h"
 #pragma once
 #pragma warning(disable : 4244 )
 class RepositoryException : public std::exception
@@ -19,28 +20,36 @@ public:
 
 
 typedef void(Car::*setterFunction)(const std::string& attribute);
+
+template <class T>
 class Repository
 {
-	std::vector<Car> m_allElements;
+	T m_allElements;
 public:
-	Repository(std::vector<Car> allElements)
-		:m_allElements(allElements) {}
+	
 	Repository() noexcept {} 
-
-	Repository(const Repository& list)
+	
+	/*Repository(const Repository<T>& list)
 	{
-		for (const auto& element : list.m_allElements)
-			m_allElements.push_back(element);
-	}
+		Node *temp = new Node;
+		temp = list.getAll().begin();
+		while (temp != nullptr)
+		{
+			//m_allElements.push_back(temp->value);
+			temp = temp->next;
+		}
 
+		delete temp;
+	}
+	*/
 	~Repository() {}
 
 	void addNewElement(const Car& element);
-	void deleteElement(const std::string& registrationNr);
-	void updateElement(const std::string& registrationNr,const std::string& attribute, setterFunction setAttribute);
+	int getSize() const noexcept  ;
 	int getPosition(const std::string & registrationNr);
-	int getSize() noexcept;
-
-	Car& getElement(const int& position);
-	std::vector<Car> getAll() const ;
+	void deleteElement(const std::string& registrationNr);
+	Car& getElement(const int& position) const ;
+	void updateElement(const std::string& registrationNr, const std::string& attribute, setterFunction setAttribute);
+	
+	
 };

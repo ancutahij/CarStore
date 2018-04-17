@@ -11,6 +11,7 @@ void Test::gettersTests()
 	std::cout << car1;
 }
 
+
 void Test::settersTests()
 {
 	Car car1{ "223","Toyota","x345", "family" };
@@ -34,9 +35,10 @@ void Test::validatorTests()
 		validator.isValidElement(car1) ;
 		
 	}
-	catch (const std::exception&)
+	catch (ElementException &e )
 	{
 		exceptionThrown = 1;
+		std::cout << e.what();
 	}
 	assert(exceptionThrown);
 	exceptionThrown = 0;

@@ -150,17 +150,20 @@
   <ItemGroup>
     <ClCompile Include="Domain.cpp" />
     <ClCompile Include="DomainTests.cpp" />
+    <ClCompile Include="LinkedList.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Repository.cpp" />
     <ClCompile Include="RepositoryTests.cpp" />
     <ClCompile Include="Service.cpp" />
     <ClCompile Include="Service.h" />
     <ClCompile Include="ServiceTests.cpp" />
+    <ClCompile Include="template.cpp" />
     <ClCompile Include="UserInterface.cpp" />
     <ClCompile Include="Validator.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Domain.h" />
+    <ClInclude Include="LinkedList.h" />
     <ClInclude Include="Repository.h" />
     <ClInclude Include="Tests.h" />
     <ClInclude Include="UserInterface.h" />

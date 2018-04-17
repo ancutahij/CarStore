@@ -2,7 +2,7 @@
 
 void Test::addTestService()
 {
-	Repository repo;
+	Repository<List> repo;
 	Validator val;
 	Service srv{ repo, val };
 	Car car1{ "223","Toyota","x345", "family" };
@@ -28,7 +28,7 @@ void Test::addTestService()
 }
 void Test::deleteTestService()
 {
-	Repository repo;
+	Repository<List> repo;
 	Validator val;
 	Service srv{ repo, val };
 	Car car1{ "223","Toyota","x345", "family" };
@@ -60,7 +60,7 @@ void Test::deleteTestService()
 }
 void Test::updateTestService()
 {
-	Repository repo;
+	Repository<List> repo;
 	Validator val;
 	Service srv{ repo, val };
 	Car car1{ "223","Toyota","x345", "family" };
@@ -70,6 +70,7 @@ void Test::updateTestService()
 	srv.addNewElementService(car2);
 	srv.addNewElementService(car3);
 	assert(srv.getSizeRepo() == 3);
+
 
 	srv.updateManufacturerService("245", "Mercedes");
 	srv.updateModelService("245", "1234");
@@ -85,7 +86,7 @@ void Test::updateTestService()
 
 void Test::searchElement()
 {
-	Repository repo;
+	Repository<List> repo;
 	Validator val;
 	Service srv{ repo, val };
 	Car car1{ "223","Toyota","x345", "family" };
@@ -115,7 +116,7 @@ void Test::searchElement()
 
 void Test::filterTests()
 {
-	Repository repo;
+	Repository<List> repo;
 	Validator val;
 	Service srv{ repo, val };
 	Car car1{ "223","Toyota","x345", "family" };
@@ -134,7 +135,7 @@ void Test::filterTests()
 
 void Test::sortTests()
 {
-	Repository repo;
+	Repository<List> repo;
 	Validator val;
 	Service srv{ repo, val };
 	Car car1{ "223","Toyota","x345", "family" };

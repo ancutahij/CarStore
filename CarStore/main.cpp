@@ -3,6 +3,7 @@
 #define _CRTDBG_MAP_ALLOC  
 #include <stdlib.h>  
 #include <crtdbg.h>  
+
 /*
 	Clear the screen
 */
@@ -18,7 +19,6 @@ void tests()
 	Test::addTests();
 	Test::deleteTests();
 	Test::updateTests();
-	Test::copyConstructer();
 	Test::addTestService();
 	Test::deleteTestService();
 	Test::updateTestService();
@@ -33,12 +33,13 @@ int main()
 {
 	tests();
 	
-	Repository repo;
+	{Repository<List> repo;
 	Validator val;
 	Service srv{ repo, val };
 	Console cons{ srv };
 	cons.ui();
-	
+
+	}
 	_CrtDumpMemoryLeaks();
 	return 0;
 
