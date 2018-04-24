@@ -11,7 +11,7 @@ void Console::ui()
 {
 	while (true)
 	{
-		std::cout << "\n\n ==MENU==\n 1.Print\n 2.Add\n 3.Delete\n 4.Update\n 5.Search\n 6.Filter\n 7.Sort\n -1.Exit\n ";
+		std::cout << "\n\n ==MENU==\n 1.Print\n 2.Add\n 3.Delete\n 4.Update\n 5.Search\n 6.Filter\n 7.Sort\n 8.Add new element to basket\n 9.Delete entire basket\n 10.Populate basket randomly\n 11.Print basket\n-1.Exit\n ";
 		std::cout << "\n Option: ";
 		std::string option = getUserInput();
 
@@ -59,7 +59,21 @@ void Console::ui()
 				else
 					std::cout << "\n\t There are no cars.\n";
 				break;
-
+			case OptionMenu::ADD_TO_BASKET:
+				addToBasketElement();
+				break;
+			case OptionMenu::DELETE_ALL:
+				m_srv.deleteAllService();
+				break;
+			case OptionMenu::PRINT_BASKET:
+			{	std::vector<Car> v = m_srv.getAllBasketService();
+			std::for_each(v.begin(), v.end(), [](const Car& c) {std::cout << c << "\n"; });
+			}
+				break;
+			case OptionMenu::POPULATE_RANDOM:
+				populate_randomBasket();
+				break;
+			
 			default:
 				std::cout << "\n\t INVALID OPTION \n";
 			}
@@ -80,7 +94,7 @@ void Console::ui()
 }
 
 /*
-	Get user inputs and add a new car to the vector
+Get user inputs and add a new car to the vector
 */
 void Console::addElement()
 {
@@ -90,9 +104,9 @@ void Console::addElement()
 	std::cout << "Give manufacturer:";
 	manufacturer = getUserInput();
 	std::cout << "Give model:";
-	model= getUserInput();
+	model = getUserInput();
 	std::cout << "Give type:";
-	type= getUserInput();
+	type = getUserInput();
 
 	Car car{ regNr,manufacturer, model, type };
 	m_srv.addNewElementService(car);
@@ -100,7 +114,7 @@ void Console::addElement()
 }
 
 /*
-	Display on the screen all cars
+Display on the screen all cars
 */
 void Console::printElements()
 {
@@ -108,24 +122,26 @@ void Console::printElements()
 	if (!size)
 		std::cout << "\t THERE ARE NO CARS FOR PRINTING \n";
 	else
-		for (int i = 0; i < size; i++)
-			std::cout << m_srv.getElementService(i);
+	{
+		std::vector<Car> c= m_srv.getAllService();
+		std::for_each(c.begin(), c.end(), [](const Car& c) {std::cout << c << "\n"; });
+	}
 }
 
 /*
-	Delete element by its register number
+Delete element by its register number
 */
 void Console::deleteElement()
 {
 	std::string regNr;
 	std::cout << "Give registration number:";
 	regNr = getUserInput();
-	
+
 	m_srv.deleteElementService(regNr);
 }
 /*
-	Update an element's field. 
-	The field can be manufacturer, type or model
+Update an element's field.
+The field can be manufacturer, type or model
 */
 void Console::updateElement()
 {
@@ -134,7 +150,7 @@ void Console::updateElement()
 		std::cout << "\n\n ==MENU UPDATE==\n 1.Update by Manufacturer\n 2.Update by Type\n 3.Update by Model\n -1.Exit\n ";
 		std::cout << "\n Option: ";
 		std::string option = getUserInput();
-		
+
 		if (std::stoi(option) == OptionMenu::EXIT)// convert string to int type
 			break;
 
@@ -160,11 +176,11 @@ void Console::updateElement()
 			std::cout << "\n\t INVALID OPTION \n";
 		}
 	}
-	
+
 }
 
 /*
-	Print out on the screen the car that has the given register number.
+Print out on the screen the car that has the given register number.
 */
 void Console::searchElement()
 {
@@ -182,7 +198,7 @@ void Console::searchElement()
 }
 
 /*
-	Filter elements by a key
+Filter elements by a key
 */
 void Console::filterElements()
 {
@@ -202,18 +218,18 @@ void Console::filterElements()
 		switch (std::stoi(option))
 		{
 		case OptionFilter::MANUFACTURER:
-			rez= m_srv.filterByManufacturer(attribute);
+			rez = m_srv.filterByManufacturer(attribute);
 			if (rez.size() == 0)
 				throw RepositoryException("\n\t No cars with the given manufacturer!");
 			for (int i = 0; i < rez.size(); i++)
-				std::cout << rez.at(i)<<"\n";
+				std::cout << rez.at(i) << "\n";
 			break;
 		case OptionFilter::TYPE:
-			rez=m_srv.filterByType(attribute);
+			rez = m_srv.filterByType(attribute);
 			if (rez.size() == 0)
 				throw RepositoryException("\n\t No cars with the given type!");
 			for (int i = 0; i < rez.size(); i++)
-				std::cout << rez.at(i)<<"\n";
+				std::cout << rez.at(i) << "\n";
 			break;
 		default:
 			std::cout << "\n\t INVALID OPTION \n";
@@ -222,9 +238,8 @@ void Console::filterElements()
 }
 
 /*
-	Sort elements by a key
+Sort elements by a key
 */
-
 void Console::sortElements()
 {
 	while (true)
@@ -236,7 +251,7 @@ void Console::sortElements()
 		if (std::stoi(option) == OptionMenu::EXIT)// convert string to int type
 			break;
 
-	
+
 		std::vector<Car> rez;
 
 		switch (std::stoi(option))
@@ -260,4 +275,28 @@ void Console::sortElements()
 			std::cout << "\n\t INVALID OPTION \n";
 		}
 	}
+}
+
+/*
+	Add a new element to basket
+*/
+void Console::addToBasketElement()
+{
+	std::string regNr;
+	std::cout << " Registration number:";
+	regNr = getUserInput();
+
+	m_srv.addToBasketService(regNr);
+}
+
+/*
+	Populate randomly the basket
+*/
+void Console::populate_randomBasket()
+{
+	std::string nr;
+	std::cout << " Number of cars:";
+	nr = getUserInput();
+	m_srv.addRandomToBasket(nr);
+
 }

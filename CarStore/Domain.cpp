@@ -1,29 +1,22 @@
 #include"Domain.h"
 
-
-/*
-	Getters for car's fields.
-*/
-std::string Car::getRegistration() const
+const std::string& Car::getRegistration() const
 {
 	return this->m_registrationNumber;
 }
-std::string Car::getManufacturer() const
+const std::string& Car::getManufacturer() const
 {
 	return this->m_manufacturer;
 }
-std::string Car::getModel() const
+const std::string& Car::getModel() const
 {
 	return this->m_model;
 }
-std::string Car::getType() const
+const std::string& Car::getType() const
 {
 	return this->m_type;
 }
 
-/*
-	Setters for car's fields.
-*/
 void Car::setRegistration(const std::string& registrationNr)
 {
 	this->m_registrationNumber = registrationNr;
@@ -42,15 +35,15 @@ void Car::setType(const std::string& type)
 	this->m_type = type;
 }
 /*
-	Overloading "<<" operator
+Overloading "<<" operator
 */
-std::ostream& operator<<(std::ostream& out, const Car& car) 
+std::ostream& operator<<(std::ostream& out, const Car& car)
 {
 	out << "ID: " << car.m_registrationNumber << " MANUFACTURER: " << car.m_manufacturer << " MODEL: " << car.m_model << " TYPE:" << car.m_type << "\n";
 	return out;
 }
 /*
-	Overloading assign operator
+Overloading assign operator
 */
 Car& Car::operator=(const Car& newCar)
 {
@@ -61,4 +54,13 @@ Car& Car::operator=(const Car& newCar)
 
 	return *this;
 }
+
+/*
+	Overload the "==" operator
+*/
+bool operator== (const Car& c1, const Car&c2)
+{
+	return c1.getRegistration() == c2.getRegistration() && c1.getModel() == c2.getModel() && c1.getManufacturer() == c2.getManufacturer() && c1.getType() == c2.getType();
+}
+
 

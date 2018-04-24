@@ -1,7 +1,7 @@
 #include<string>
 #include<iostream>
 #pragma once
-class Car 
+class Car
 {
 	std::string m_registrationNumber;
 	std::string m_manufacturer;
@@ -11,26 +11,26 @@ class Car
 public:
 
 	Car(std::string registrationNumber, std::string manufacturer, std::string model, std::string type)
-		: m_registrationNumber(registrationNumber), m_manufacturer(manufacturer), m_model(model), m_type(type){}
+		: m_registrationNumber(registrationNumber), m_manufacturer(manufacturer), m_model(model), m_type(type) {}
 
 	// using dalegating constructor to minimize redundant code
-	Car() : Car(" ", " ", " ", " ")  {} 
+	Car() : Car(" ", " ", " ", " ") {}
 
-	~Car() {} 
+	~Car() {}
 
 	Car(const Car& original)
 		: m_registrationNumber(original.m_registrationNumber), m_manufacturer(original.m_manufacturer), m_model(original.m_model), m_type(original.m_type)
 	{
+		//	std::cout << "Copy Constructor";
 	}
-
 	// Overloading needed operators
-	friend std::ostream& operator<<(std::ostream& out, const Car& car) ;
+	friend std::ostream& operator<<(std::ostream& out, const Car& car);
 	Car& operator=(const Car& newCar);
-
-	std::string getRegistration() const;
-	std::string getManufacturer() const;
-	std::string getModel() const;
-	std::string getType() const;
+	friend bool operator== (const Car& c1, const Car&c2);
+	const std::string& getRegistration() const;
+	const std::string& getManufacturer() const;
+	const std::string& getModel() const;
+	const std::string& getType() const;
 
 	void setRegistration(const std::string& registrationNr);
 	void setManufacturer(const std::string& manufacturer);

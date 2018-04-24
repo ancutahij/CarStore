@@ -1,8 +1,11 @@
 #include"Service.h"
 
+const std::vector<Car> Service::getAllService() const
+{
+	return m_repo.getAll();
+}
 /*
-	Add a new element to the list
-	Exception are thrown in repository class
+Add a new element to the list
 */
 void Service::addNewElementService(const Car& element)
 {
@@ -11,31 +14,32 @@ void Service::addNewElementService(const Car& element)
 }
 
 /*
-	Delete an element by its registration number
-	Exception are thrown in repository class
-
+Delete an element by its registration number
 */
 void Service::deleteElementService(const std::string& registrationNr)
 {
+
 	m_val.isValidRegistrationNR(registrationNr);
+	Car c = getElementService(searchElement(registrationNr));
 	m_repo.deleteElement(registrationNr);
+	m_basket.deleteCarBascket(c);
 }
 
 /*
-	Update manufacturer field for an element
-	Exception are thrown in repository class
-
+Update manufacturer field for an element
 */
 void Service::updateManufacturerService(const std::string& registrationNr, const std::string& attribute)
 {
 	m_val.isValidRegistrationNR(registrationNr);
 	m_val.isValidManufacturer(attribute);
+	Car c = getElementService(searchElement(registrationNr));
 	m_repo.updateElement(registrationNr, attribute, &Car::setManufacturer);
+	Car cNew = getElementService(searchElement(registrationNr));
+	m_basket.updateCarBasket(c, cNew);
 }
 
 /*
-	Update type field for an element
-	Exception are thrown in repository class
+Update type field for an element
 
 */
 void Service::updateTypeService(const std::string& registrationNr, const std::string& attribute)
@@ -43,34 +47,38 @@ void Service::updateTypeService(const std::string& registrationNr, const std::st
 
 	m_val.isValidRegistrationNR(registrationNr);
 	m_val.isValidType(attribute);
+	Car c = getElementService(searchElement(registrationNr));
 	m_repo.updateElement(registrationNr, attribute, &Car::setType);
-
+	Car cNew = getElementService(searchElement(registrationNr));
+	m_basket.updateCarBasket(c, cNew);
 }
 
 /*
-	Update model field for an element
-	Exception are thrown in repository classs
+Update model field for an element
 */
 void Service::updateModelService(const std::string& registrationNr, const std::string& attribute)
 {
 
 	m_val.isValidRegistrationNR(registrationNr);
 	m_val.isValidModel(attribute);
+	Car c = getElementService(searchElement(registrationNr));
 	m_repo.updateElement(registrationNr, attribute, &Car::setModel);
+	Car cNew = getElementService(searchElement(registrationNr));
+	m_basket.updateCarBasket(c, cNew);
 }
 
 /*
-	Get current size of elements list.
+Get current size of elements list.
 */
-int Service::getSizeRepo() const
+int Service::getSizeRepo()
 {
 	return m_repo.getSize();
 }
 
 /*
-	Get element from a position
+Get element from a position
 */
-Car& Service::getElementService(const int& position) const
+Car& Service::getElementService(const int& position)
 {
 	return m_repo.getElement(position);
 }
@@ -93,14 +101,9 @@ If a car has the needed requirements, it is added in vector
 std::vector<Car> Service::filterElements(std::function<int(const Car&)> fct) const
 {
 	std::vector<Car> rez;
-	for (int i = 0; i < getSizeRepo(); i++)
-	{
-		Car car = m_repo.getElement(i);
-		if (fct(car))
-		{
-			rez.push_back(car);
-		}
-	}
+	std::vector<Car> cars = m_repo.getAll();
+	std::copy_if(cars.begin(), cars.end(), std::back_inserter(rez), fct);
+	// For some reason rez.begin() doesn't work. I used std::back_inserter that makes the same thing
 
 	return rez;
 }
@@ -111,43 +114,28 @@ Return a vector that contains all cars that their manufacturer contains the subs
 std::vector<Car> Service::filterByManufacturer(const std::string& attribute) const
 {
 	m_val.isValidManufacturer(attribute);
-	return filterElements([attribute](const Car& car)
-	{return car.getManufacturer() == attribute; });
+	return filterElements([attribute](const Car& car) {return car.getManufacturer() == attribute; });
 
 }
 
 /*
 Return a vector that contains all cars that their type contains the substring: attribute
-
 */
+
 std::vector<Car> Service::filterByType(const std::string& attribute) const
 {
 	m_val.isValidType(attribute);
-	return filterElements([attribute](const Car& car)
-	{return car.getType() == attribute; });
+	return filterElements([attribute](const Car& car) {return car.getType() == attribute; });
 
 }
-/*
-	General sort function.
-	This function can be applied for sorting after register number, type and manufacturer+ model
-*/
+
 std::vector<Car> Service::sortElements(SortFunction fct) const
 {
-	std::vector<Car> rez;
-	for (int i = 0; i < getSizeRepo(); i++)
-	{
-		Car car = getElementService(i);
-		rez.push_back(car);
-	}
-
+	std::vector<Car> rez{ m_repo.getAll() };
 	std::sort(rez.begin(), rez.end(), fct);
 	return rez;
 }
 
-/*
-	Use general sort function defined above.
-	Sort ascending after register number
-*/
 std::vector<Car> Service::sortRegistrationNumber() const
 {
 	return sortElements([](const Car& c1, const Car& c2)
@@ -157,11 +145,6 @@ std::vector<Car> Service::sortRegistrationNumber() const
 	});
 }
 
-/*
-	
-	Use general sort function defined above.
-	Sort ascending after type.
-*/
 std::vector<Car> Service::sortType() const
 {
 	return sortElements([](const Car& c1, const Car &c2)
@@ -170,12 +153,6 @@ std::vector<Car> Service::sortType() const
 		return rez == -1 ? 1 : 0;
 	});
 }
-
-/*
-	
-	Use general sort function defined above.
-	Sort ascending after manufacturer + model.
-*/
 std::vector <Car> Service::sortManufacturerModel() const
 {
 	return sortElements([](const Car& c1, const Car& c2)
@@ -192,4 +169,42 @@ std::vector <Car> Service::sortManufacturerModel() const
 			else return 0;
 		}
 	});
+}
+
+/*
+Add a new car by registration number to the basket.
+*/
+void Service::addToBasketService(const std::string& registrationNumber)
+{
+	m_val.isValidRegistrationNR(registrationNumber);
+	Car c = getElementService(searchElement(registrationNumber));
+	m_basket.addCarToBasket(c);
+}
+/*
+Add nrTimes elements to the basket
+Throw exception if nrTimes is less than number of elements in repository or nrTimes isn't a number or is negative
+*/
+void Service::addRandomToBasket(const std::string& nrTimes)
+{
+	m_val.isNumber(nrTimes);
+	if (getSizeRepo() < std::stoi(nrTimes))
+		throw RepositoryException("\n\tTo few elements in repository!");
+	std::vector<Car> copy = getAllService();
+	m_basket.populateRandom(std::stoi(nrTimes), copy);
+}
+
+/*
+Delete all elements from basket.
+*/
+void Service::deleteAllService()
+{
+	m_basket.deleteAll();
+}
+
+/*
+	Get all elements from basket.
+*/
+const std::vector<Car>& Service::getAllBasketService() const
+{
+	return m_basket.getAllBasket();
 }

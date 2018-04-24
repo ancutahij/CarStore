@@ -42,13 +42,13 @@
     <ClCompile Include="Validator.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="LinkedList.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="template.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="RepositoryTests.cpp">
+      <Filter>Source Files\Tests</Filter>
+    </ClCompile>
+    <ClCompile Include="BasketCar.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="BasketTests.cpp">
       <Filter>Source Files\Tests</Filter>
     </ClCompile>
     <ClCompile Include="Service.cpp">
@@ -71,7 +71,7 @@
     <ClInclude Include="Validator.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="LinkedList.h">
+    <ClInclude Include="BasketCar.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

@@ -3,9 +3,8 @@
 #define _CRTDBG_MAP_ALLOC  
 #include <stdlib.h>  
 #include <crtdbg.h>  
-
 /*
-	Clear the screen
+Clear the screen
 */
 void cls() noexcept
 {
@@ -19,6 +18,7 @@ void tests()
 	Test::addTests();
 	Test::deleteTests();
 	Test::updateTests();
+	Test::copyConstructer();
 	Test::addTestService();
 	Test::deleteTestService();
 	Test::updateTestService();
@@ -26,20 +26,27 @@ void tests()
 	Test::filterTests();
 	Test::sortTests();
 	Test::validatorTests();
-	
+	Test::addBasketTest();
+	Test::deleteBasketTest();
+	Test::updateBasketTest();
+	Test::populateBasketTest();
+	Test::basketServiceTest();
 	cls();
 }
+
+
 int main()
 {
 	tests();
-	
-	{Repository<List> repo;
+
+	{Repository repo;
 	Validator val;
-	Service srv{ repo, val };
+	Basket basket;
+	Service srv{ repo, val , basket};
 	Console cons{ srv };
 	cons.ui();
-
 	}
+	
 	_CrtDumpMemoryLeaks();
 	return 0;
 

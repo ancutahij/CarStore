@@ -1,16 +1,15 @@
 #include"Tests.h"
 #include<iostream>
-void Test::gettersTests() 
+void Test::gettersTests()
 {
 	Car car1{ "223","Toyota","x345", "family" };
 	assert(car1.getRegistration() == "223");
 	assert(car1.getModel() == "x345");
 	assert(car1.getManufacturer() == "Toyota");
 	assert(car1.getType() == "family");
-
+	
 	std::cout << car1;
 }
-
 
 void Test::settersTests()
 {
@@ -32,13 +31,12 @@ void Test::validatorTests()
 	bool exceptionThrown = 0;
 	try
 	{
-		validator.isValidElement(car1) ;
-		
+		validator.isValidElement(car1);
+
 	}
-	catch (ElementException &e )
+	catch (const std::exception&)
 	{
 		exceptionThrown = 1;
-		std::cout << e.what();
 	}
 	assert(exceptionThrown);
 	exceptionThrown = 0;
@@ -47,9 +45,11 @@ void Test::validatorTests()
 		validator.isValidElement(car2);
 
 	}
-	catch (const std::exception&)
+	catch (ElementException &exception)
 	{
 		exceptionThrown = 1;
+		std::cerr << exception.what();
+
 	}
 	assert(exceptionThrown);
 }

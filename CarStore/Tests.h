@@ -7,16 +7,20 @@ public:
 	static void gettersTests();
 	static void settersTests();
 	static void addTests();
-	static void validatorTests();
 	static void deleteTests();
 	static void updateTests();
-
-	//static void copyConstructer();
+	static void copyConstructer();
 	static void addTestService();
 	static void deleteTestService();
 	static void updateTestService();
 	static void searchElement();
 	static void filterTests();
 	static void sortTests();
-	
+	static void validatorTests();
+	static void addBasketTest();
+	static void deleteBasketTest();
+	static void updateBasketTest();
+	static void populateBasketTest();
+	static void basketServiceTest();
+
 };
