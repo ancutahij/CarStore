@@ -202,9 +202,17 @@ void Service::deleteAllService()
 }
 
 /*
-	Get all elements from basket.
+Get all elements from basket.
 */
 const std::vector<Car>& Service::getAllBasketService() const
 {
 	return m_basket.getAllBasket();
+}
+
+/*
+	Export all basket elements to a html file.
+*/
+void Service::exportHtmlFile(const std::string& fileName) const
+{
+	Export::exportHTML(fileName, m_basket.getAllBasket());
 }

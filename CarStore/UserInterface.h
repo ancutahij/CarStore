@@ -27,6 +27,7 @@ public:
 		DELETE_ALL = 9,
 		POPULATE_RANDOM = 10,
 		PRINT_BASKET=11,
+		EXPORT_HTML=12,
 		EXIT = -1,
 	};
 
@@ -63,7 +64,6 @@ public:
 	void filterElements();
 	void sortElements();
 	void addToBasketElement();
-	void delete_all();
 	void populate_randomBasket();
 
 };

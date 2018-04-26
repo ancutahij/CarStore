@@ -158,12 +158,14 @@
     <ClCompile Include="Service.h" />
     <ClCompile Include="ServiceTests.cpp" />
     <ClCompile Include="BasketTests.cpp" />
+    <ClCompile Include="ExportFiles.cpp" />
     <ClCompile Include="UserInterface.cpp" />
     <ClCompile Include="Validator.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BasketCar.h" />
     <ClInclude Include="Domain.h" />
+    <ClInclude Include="ExportFiles.h" />
     <ClInclude Include="Repository.h" />
     <ClInclude Include="Tests.h" />
     <ClInclude Include="UserInterface.h" />

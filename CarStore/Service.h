@@ -1,6 +1,7 @@
 #include"Repository.h"
 #include"Validator.h"
 #include"BasketCar.h"
+#include"ExportFiles.h"
 #include<functional>
 #include<vector>
 #include<algorithm>
@@ -44,5 +45,6 @@ public:
 	void addRandomToBasket(const std::string& nrTimes);
 	void deleteAllService();
 	const std::vector<Car>& getAllBasketService() const ;
+	void exportHtmlFile(const std::string& fileName) const;
 };
 

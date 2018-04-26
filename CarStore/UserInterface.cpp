@@ -11,7 +11,8 @@ void Console::ui()
 {
 	while (true)
 	{
-		std::cout << "\n\n ==MENU==\n 1.Print\n 2.Add\n 3.Delete\n 4.Update\n 5.Search\n 6.Filter\n 7.Sort\n 8.Add new element to basket\n 9.Delete entire basket\n 10.Populate basket randomly\n 11.Print basket\n-1.Exit\n ";
+		std::cout << "\n\n ==MENU==\n 1.Print\n 2.Add\n 3.Delete\n 4.Update\n 5.Search\n 6.Filter\n 7.Sort\n 8.Add new element to basket\n 9.Delete entire basket\n 10.Populate basket randomly\n 11.Print basket\n 12.Export to HTML file\n-1.Exit\n ";
+
 		std::cout << "\n Option: ";
 		std::string option = getUserInput();
 
@@ -73,10 +74,24 @@ void Console::ui()
 			case OptionMenu::POPULATE_RANDOM:
 				populate_randomBasket();
 				break;
-			
+			case OptionMenu::EXPORT_HTML:
+			{	
+				if (m_srv.getAllBasketService().size() && m_srv.getAllService().size())
+				{
+					std::string file;
+					std::cout << " File name:";
+					file = getUserInput();
+					m_srv.exportHtmlFile(file);
+				}
+				else
+					std::cout << "\n\t There are no cars in repository or basket!\n";
+					
+			}
+			break;
 			default:
 				std::cout << "\n\t INVALID OPTION \n";
 			}
+			std::cout << "\n TOTAL FROM BASKET: " << m_srv.getAllBasketService().size() << "\n";
 		}
 		catch (RepositoryException &exception)
 		{
