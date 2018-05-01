@@ -3,17 +3,19 @@
 void Test::addTestService()
 {
 	Repository repo;
+
 	Validator val;
 	Basket basket;
 	Service srv{ repo, val , basket};
 	Car car1{ "223","Toyota","x345", "family" };
 	Car car2{ "245", "Audi", "24", "trip" };
 	Car car3{ "245", "Audi", " ", "trip" };
-	assert(srv.getSizeRepo() == 0);
+//	assert(srv.getSizeRepo() == 0);
 
 	srv.addNewElementService(car1);
 	assert(srv.getSizeRepo() == 1);
-
+	
+	
 	srv.addNewElementService(car2);
 	assert(srv.getSizeRepo() == 2);
 
@@ -27,7 +29,6 @@ void Test::addTestService()
 	}
 	assert(ExceptionThrown);
 
-	
 }
 void Test::deleteTestService()
 {

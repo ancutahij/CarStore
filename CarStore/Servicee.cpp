@@ -11,6 +11,8 @@ void Service::addNewElementService(const Car& element)
 {
 	m_val.isValidElement(element);
 	m_repo.addNewElement(element);
+	UndoActions.push_back(new UndoAddAction{ m_repo, element });
+	
 }
 
 /*
@@ -23,6 +25,8 @@ void Service::deleteElementService(const std::string& registrationNr)
 	Car c = getElementService(searchElement(registrationNr));
 	m_repo.deleteElement(registrationNr);
 	m_basket.deleteCarBascket(c);
+	UndoActions.push_back(new UndoDeleteAction{ m_repo, c });
+
 }
 
 /*
@@ -35,7 +39,10 @@ void Service::updateManufacturerService(const std::string& registrationNr, const
 	Car c = getElementService(searchElement(registrationNr));
 	m_repo.updateElement(registrationNr, attribute, &Car::setManufacturer);
 	Car cNew = getElementService(searchElement(registrationNr));
+	
 	m_basket.updateCarBasket(c, cNew);
+	UndoActions.push_back(new UndoUpdateAction{ m_repo, c });
+
 }
 
 /*
@@ -51,7 +58,10 @@ void Service::updateTypeService(const std::string& registrationNr, const std::st
 	m_repo.updateElement(registrationNr, attribute, &Car::setType);
 	Car cNew = getElementService(searchElement(registrationNr));
 	m_basket.updateCarBasket(c, cNew);
+	UndoActions.push_back(new UndoUpdateAction{ m_repo, c });
+
 }
+
 
 /*
 Update model field for an element
@@ -65,6 +75,8 @@ void Service::updateModelService(const std::string& registrationNr, const std::s
 	m_repo.updateElement(registrationNr, attribute, &Car::setModel);
 	Car cNew = getElementService(searchElement(registrationNr));
 	m_basket.updateCarBasket(c, cNew);
+	UndoActions.push_back(new UndoUpdateAction{ m_repo, c });
+
 }
 
 /*
@@ -210,9 +222,23 @@ const std::vector<Car>& Service::getAllBasketService() const
 }
 
 /*
-	Export all basket elements to a html file.
+Export all basket elements to a html file.
 */
 void Service::exportHtmlFile(const std::string& fileName) const
 {
 	Export::exportHTML(fileName, m_basket.getAllBasket());
+}
+
+
+/*
+Remake the last operation.
+*/
+void Service::undo()
+{
+	if (UndoActions.empty())
+		throw ElementException("Impossible Undo!");
+	UndoAction* act = UndoActions.back();
+	act->doUndo();
+	UndoActions.pop_back();
+	delete act;
 }

@@ -35,9 +35,9 @@ public:
 
 	~Repository() {}
 
-	void addNewElement(const Car& element);
-	void deleteElement(const std::string& registrationNr);
-	void updateElement(const std::string& registrationNr, const std::string& attribute, setterFunction setAttribute);
+	virtual void addNewElement(const Car& element);
+	virtual void deleteElement(const std::string& registrationNr);
+	virtual void updateElement(const std::string& registrationNr, const std::string& attribute, setterFunction setAttribute);
 	int getPosition(const std::string & registrationNr);
 	int getSize() noexcept;
 

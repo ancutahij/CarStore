@@ -11,8 +11,7 @@ void Console::ui()
 {
 	while (true)
 	{
-		std::cout << "\n\n ==MENU==\n 1.Print\n 2.Add\n 3.Delete\n 4.Update\n 5.Search\n 6.Filter\n 7.Sort\n 8.Add new element to basket\n 9.Delete entire basket\n 10.Populate basket randomly\n 11.Print basket\n 12.Export to HTML file\n-1.Exit\n ";
-
+		std::cout << "\n\n ==MENU==\n 1.Print\n 2.Add\n 3.Delete\n 4.Update\n 5.Search\n 6.Filter\n 7.Sort\n 8.Add new element to basket\n 9.Delete entire basket\n 10.Populate basket randomly\n 11.Print basket\n 12.Export to HTML file\n 13.Undo\n-1.Exit\n ";
 		std::cout << "\n Option: ";
 		std::string option = getUserInput();
 
@@ -88,6 +87,9 @@ void Console::ui()
 					
 			}
 			break;
+			case OptionMenu::UNDO:
+				m_srv.undo();
+				break;
 			default:
 				std::cout << "\n\t INVALID OPTION \n";
 			}

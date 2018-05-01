@@ -50,7 +50,6 @@ void Test::deleteTests()
 	assert(car.getManufacturer() == "Opel");
 	assert(car1.getType() == "family");
 	
-
 }
 
 
@@ -68,7 +67,6 @@ void Test::updateTests()
 	std::string manufacturer = "Mercedes";
 
 	repo.updateElement("245", "Mercedes", &Car::setManufacturer);
-
 }
 
 
@@ -84,4 +82,4 @@ void Test::copyConstructer()
 
 	Repository newRepo{ repo };
 	assert(newRepo.getSize() == 3);
-}
+	}

@@ -31,6 +31,7 @@ void tests()
 	Test::updateBasketTest();
 	Test::populateBasketTest();
 	Test::basketServiceTest();
+	
 	cls();
 }
 
@@ -39,14 +40,24 @@ int main()
 {
 	tests();
 
-	{Repository repo;
-	Validator val;
-	Basket basket;
-	Service srv{ repo, val , basket};
-	Console cons{ srv };
-	cons.ui();
+	{
+		try
+		{
+
+			FileRepository repo{ "cars.txt" };
+			//	Repository repo;
+			Validator val;
+			Basket basket;
+			Service srv{ repo, val , basket };
+			Console cons{ srv };
+			cons.ui();
+		
+		}
+		catch (RepositoryException &error)
+		{
+			std::cout << error.what();
+		}
 	}
-	
 	_CrtDumpMemoryLeaks();
 	return 0;
 

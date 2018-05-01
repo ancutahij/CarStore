@@ -49,7 +49,9 @@ void Basket::updateCarBasket(const Car& car, const Car& newCar)
 		it = std::find(m_basket.begin(), m_basket.end(), car);
 	}
 }
-
+/*
+	Populate randomly a vector
+*/
 void Basket::populateRandom(int nrTimes, std::vector<Car> allCars)
 {
 	std::shuffle(allCars.begin(), allCars.end(), std::default_random_engine(std::random_device{}())); 

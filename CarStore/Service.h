@@ -1,27 +1,44 @@
 #include"Repository.h"
+#include"FileRepository.h"
 #include"Validator.h"
 #include"BasketCar.h"
+#include"Undo.h"
 #include"ExportFiles.h"
 #include<functional>
 #include<vector>
 #include<algorithm>
+#include<typeinfo>
+
 #pragma once
 #pragma warning (disable: 4267)
 typedef int(*SortFunction)(const Car&, const Car&);
 class Service
 {
-	Repository m_repo;
+	Repository& m_repo;
 	Validator m_val;
 	Basket m_basket;
+	std::vector<UndoAction*> UndoActions;
+
 public:
-	Service(const Repository& repo, const Validator& val, const Basket& basket)
+	Service(Repository& repo, const Validator& val, const Basket& basket)
+		:m_repo{repo}
 	{
-		m_repo = repo;
+		//m_repo = repo;
 		m_val = val;
 		m_basket = basket;
 	}
-
-	~Service() {}
+	
+	~Service()
+	{
+		std::cout << "Apeleaza-teeee";
+		std::cout << "Destructor Service";
+		for (auto & el : UndoActions)
+		{
+			std::cout << typeid(el).name()<<"    ";
+			delete el;
+		}
+	}
+	
 
 	//Service(const Service& srv) = delete;
 
@@ -46,5 +63,6 @@ public:
 	void deleteAllService();
 	const std::vector<Car>& getAllBasketService() const ;
 	void exportHtmlFile(const std::string& fileName) const;
+	void undo();
 };
 

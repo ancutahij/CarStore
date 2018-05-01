@@ -28,6 +28,7 @@ public:
 		POPULATE_RANDOM = 10,
 		PRINT_BASKET=11,
 		EXPORT_HTML=12,
+		UNDO=13,
 		EXIT = -1,
 	};
 
