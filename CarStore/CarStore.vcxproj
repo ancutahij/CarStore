@@ -110,7 +110,7 @@
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <SubSystem>Console</SubSystem>
+      <SubSystem>Windows</SubSystem>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -149,9 +149,12 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="BasketCar.cpp" />
+    <ClCompile Include="BasketGUI.cpp" />
     <ClCompile Include="Domain.cpp" />
     <ClCompile Include="DomainTests.cpp" />
+    <ClCompile Include="GUI.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="ModelView.cpp" />
     <ClCompile Include="Repository.cpp" />
     <ClCompile Include="RepositoryTests.cpp" />
     <ClCompile Include="Service.h" />
@@ -165,9 +168,13 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BasketCar.h" />
+    <ClInclude Include="BasketGUI.h" />
     <ClInclude Include="Domain.h" />
     <ClInclude Include="ExportFiles.h" />
     <ClInclude Include="FileRepository.h" />
+    <ClInclude Include="GUI.h" />
+    <ClInclude Include="ModelView.h" />
+    <ClInclude Include="Observer.h" />
     <ClInclude Include="Undo.h" />
     <ClInclude Include="Repository.h" />
     <ClInclude Include="Tests.h" />

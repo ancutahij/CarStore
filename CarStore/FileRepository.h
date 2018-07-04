@@ -16,6 +16,7 @@ public:
 	{
 		loadFromFile();
 	}
+
 	
 	void addNewElement(const Car& element) override;
 	void deleteElement(const std::string& registrationNr) override;
